@@ -5,6 +5,22 @@ struct User {
     id: u32,
 }
 
+struct Rectangle {
+    height: u32,
+    width: u32,
+    id: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        return self.height * self.width;
+    }
+
+    fn perimeter(&self) -> u32 {
+        return 2 * (self.height + self.width);
+    }
+}
+
 fn main() {
     let users = vec![
         User {
@@ -43,4 +59,24 @@ fn main() {
         );
     }
  
+
+    let rectangles = vec![
+        Rectangle {
+            height: 10,
+            width: 20,
+            id: 1,
+
+        },
+        Rectangle {
+            height: 20,
+            width: 20,
+            id: 2,
+        },
+    ];
+
+    for i in &rectangles {
+        println!("Area of rectange id {} is {}", i.id, i.area());
+        println!("Perimeter of rectangle id {} is {}", i.id, i.perimeter());
+    }
+
 }
