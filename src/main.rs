@@ -105,4 +105,47 @@ fn main() {
 
     println!("Circle : {}\nSquare : {}\nRectangle : {}", calculate_area(circle), calculate_area(square), calculate_area(rectange));
 
+    //some basic functions
+    println!("{}, {}", is_even(2), is_even(3));
+    println!("{}", fibonacci(4));
+    let a:u32 = 4;
+    println!("Factorial of {} : {}",a, fac(a));
+    let mut s = String::from("Hello world");
+    println!("{}", str_len(&s));
+}
+
+//odd even
+fn is_even(n:u32) -> bool {
+    if n%2 == 0{
+        return true;
+    }
+    return false;
+}
+
+//fibonacci
+fn fibonacci(n:u32) -> u32 {
+    if n==0 || n==1 {
+        return 1;
+    }
+    return fibonacci(n-1) + fibonacci(n-2);
+}
+
+//factorial
+
+fn fac(n:u32) -> u32 {
+    if n==0 || n==1{
+        return 1;
+    }
+
+    return n * fac(n-1);
+}
+
+//function that return lenght of a string
+
+fn str_len(s:&str) -> u32 {
+    let mut count = 0;
+    for _ in s.chars(){
+        count = count +1;
+    }
+    return count;
 }
