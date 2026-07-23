@@ -1,3 +1,5 @@
+use std::f64::consts::PI;
+
 struct User {
     name: String,
     email: String,
@@ -11,6 +13,20 @@ struct Rectangle {
     id: u32,
 }
 
+enum Shapes{
+    Rectangle(f64,f64),
+    Circle(f64),
+    Square(f64),
+}
+
+fn calculate_area(shape: Shapes) -> f64 {
+    match shape{
+        Shapes::Rectangle(w,h) => w * h,
+        Shapes::Circle(r) => PI * r * r,
+        Shapes::Square(s) => s*s,
+    }
+}
+
 impl Rectangle {
     fn area(&self) -> u32 {
         return self.height * self.width;
@@ -22,6 +38,8 @@ impl Rectangle {
 }
 
 fn main() {
+
+    //structs
     let users = vec![
         User {
             name: String::from("Akshit"),
@@ -59,7 +77,7 @@ fn main() {
         );
     }
  
-
+    //implementation
     let rectangles = vec![
         Rectangle {
             height: 10,
@@ -78,5 +96,13 @@ fn main() {
         println!("Area of rectange id {} is {}", i.id, i.area());
         println!("Perimeter of rectangle id {} is {}", i.id, i.perimeter());
     }
+
+    //enums
+
+    let circle = Shapes::Circle(7.0);
+    let square = Shapes::Square(5.0);
+    let rectange = Shapes::Rectangle(10.0,10.0);
+
+    println!("Circle : {}\nSquare : {}\nRectangle : {}", calculate_area(circle), calculate_area(square), calculate_area(rectange));
 
 }
