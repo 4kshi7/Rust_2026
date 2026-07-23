@@ -110,8 +110,9 @@ fn main() {
     println!("{}", fibonacci(4));
     let a:u32 = 4;
     println!("Factorial of {} : {}",a, fac(a));
-    let mut s = String::from("Hello world");
+    let s = String::from("Hello world");
     println!("{}", str_len(&s));
+    println!("{}", primeNumber(7));
 }
 
 //odd even
@@ -148,4 +149,23 @@ fn str_len(s:&str) -> u32 {
         count = count +1;
     }
     return count;
+}
+
+//prime number
+
+fn primeNumber(n:u32) -> bool {
+    if n==0 || n==1 {
+        return false;
+    }
+
+    let mut flag = true;
+
+    for i in 2..n{
+        if n%i == 0 {
+            flag = false;
+            break;
+        }
+    }
+
+    return flag;
 }
