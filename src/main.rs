@@ -1,4 +1,5 @@
 use std::f64::consts::PI;
+use std::io;
 
 struct User {
     name: String,
@@ -112,7 +113,40 @@ fn main() {
     println!("Factorial of {} : {}",a, fac(a));
     let s = String::from("Hello world");
     println!("{}", str_len(&s));
-    println!("{}", primeNumber(7));
+    println!("{}", prime_number(7));
+
+
+    //Taking Input from user in rust
+
+    //string
+
+    //3 Step Pipeline : Read raw bytes into String -> Trim whitespaces & newlines -> Parse into target datatype 
+    
+    let mut input_value = String::new();
+    io::stdin()
+        .read_line(&mut input_value)
+        .expect("Failed to read line");
+
+    //Trim new lines (\n) and parse into i32 
+
+    let number:i32 = match input_value.trim().parse() {
+        Ok(num) => num,
+        Err(_) =>{
+            println!("Invalid number entered!");
+            return;
+        }
+
+    };
+    println!("{}", number);
+
+    //Reading a Number (i32, u32, f64, etc.)
+
+    let mut input_number = String::new();
+    println!("Enter a number");
+    io::stdin().read_line(&mut input_number).expect("Failed to read line");
+    let input_number:i32 = input_number.trim().parse().expect("Expected a numeral");
+    println!("{}", input_number);
+
 }
 
 //odd even
@@ -153,7 +187,7 @@ fn str_len(s:&str) -> u32 {
 
 //prime number
 
-fn primeNumber(n:u32) -> bool {
+fn prime_number(n:u32) -> bool {
     if n==0 || n==1 {
         return false;
     }
