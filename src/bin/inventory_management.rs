@@ -6,16 +6,52 @@ struct Product {
     price: u32,
 }
 
-fn analyze_inventory(data: &str) -> (Vec<Product>, u32, Product, u32, u32){
+fn analyze_inventory(data: &str) -> Result<(Vec<Product>, u32, Product, u32, u32), String>{
 
     let mut prod_data:Vec<Product> = Vec::new();
     for line in data.lines(){
         let mut values = line.split(',');
 
-        let name = values.next().unwrap();
-        let category = values.next().unwrap();
-        let quantity:u32 = values.next().unwrap().parse().unwrap();
-        let price:u32 = values.next().unwrap().parse().unwrap();
+
+        //we have to safeparse each one of these variables
+        //next with either produce some or none in case of string and for integer parsing err or Ok
+
+        let name = match values.next(){
+            Some(value) => value,
+            None => return Err("Invalid formatting".to_string()),
+        };
+        
+        let category = match values.next(){
+            Some(value) => value,
+            None => return Err("Invalid formatting".to_string()),
+        };
+
+
+        //let quantity:u32 = values.next().unwrap().parse().unwrap();
+        let quantity_str = match values.next(){
+            Some(value) => value,
+            None => return Err("Invalid formatting".to_string()),
+        };
+
+        let quantity = match quantity_str.parse(){
+            Ok(value) => value,
+            Err(_) => return Err("Invalid formattingcfor quantity, expected a number".to_string()),
+            
+        };
+
+
+        //let price:u32 = values.next().unwrap().parse().unwrap();
+        let price_str = match values.next(){
+            Some(value) => value,
+            None => return Err("Invalid formatting".to_string()),
+        };
+
+        let price = match price_str.parse(){
+            Ok(value) => value,
+            Err(_) => return Err("Invalid formatting for price, expected a number".to_string()),
+            
+        };
+
 
         let product = Product {
             name: name.to_string(),
@@ -48,7 +84,7 @@ fn analyze_inventory(data: &str) -> (Vec<Product>, u32, Product, u32, u32){
     let highest_selling_prod: Product = prod_data[highest_value_index].clone();
 
 
-    (prod_data, highest_value, highest_selling_prod,total_value, total_items)
+    Ok((prod_data, highest_value, highest_selling_prod,total_value, total_items))
 
 }
 
