@@ -1,0 +1,84 @@
+#[derive(Debug, Clone)]
+struct Product {
+    name: String,
+    category: String,
+    quantity: u32,
+    price: u32,
+}
+
+fn analyze_inventory(data: &str) -> (Vec<Product>, u32, Product, u32, u32){
+
+    let mut prod_data:Vec<Product> = Vec::new();
+    for line in data.lines(){
+        let mut values = line.split(',');
+
+        let name = values.next().unwrap();
+        let category = values.next().unwrap();
+        let quantity:u32 = values.next().unwrap().parse().unwrap();
+        let price:u32 = values.next().unwrap().parse().unwrap();
+
+        let product = Product {
+            name: name.to_string(),
+            category: category.to_string(),
+            quantity,
+            price,
+        };
+
+        prod_data.push(product);
+    }
+
+    let mut highest_value: u32= 0;
+    let mut total_value: u32 = 0;
+    let mut highest_value_index: usize = 0;
+    let mut total_items: u32 = 0;
+
+    for (i, data) in prod_data.iter().enumerate(){
+        let value:u32 = data.quantity * data.price;
+
+        total_value += data.quantity * data.price;
+        total_items += data.quantity;
+        
+        if value > highest_value{
+            highest_value = value;
+            highest_value_index = i;
+        }
+         
+    }
+
+    let highest_selling_prod: Product = prod_data[highest_value_index].clone();
+
+
+    (prod_data, highest_value, highest_selling_prod,total_value, total_items)
+
+}
+
+fn main(){
+    let data: &str = "Laptop,Electronics,5,75000
+Mouse,Electronics,20,1200
+Keyboard,Electronics,10,2500
+Chair,Furniture,8,5000
+Desk,Furniture,3,12000
+Mouse,Electronics,5,1200";
+
+    println!("{:?}",analyze_inventory(data));
+
+//ProductName,Category,Quantity,Price
+}
+
+
+// Output ===============================
+/*
+Ok((
+    [
+        Product { name: "Laptop", category: "Electronics", quantity: 5, price: 75000 },
+        Product { name: "Mouse", category: "Electronics", quantity: 20, price: 1200 },
+        Product { name: "Keyboard", category: "Electronics", quantity: 10, price: 2500 },
+        Product { name: "Chair", category: "Furniture", quantity: 8, price: 5000 },
+        Product { name: "Desk", category: "Furniture", quantity: 3, price: 12000 },
+        Product { name: "Mouse", category: "Electronics", quantity: 5, price: 1200 }
+    ],
+    51,
+    Product { name: "Laptop", category: "Electronics", quantity: 5, price: 75000 },
+    506000
+))
+*/
