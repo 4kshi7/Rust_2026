@@ -93,7 +93,7 @@ fn analyze_orders(data: &str) -> Result<(Vec<Order>, HashMap<String,u32>, HashMa
 
 }
 
-fn main(){
+            fn main(){
 
     let data: &str = "alice,Laptop,Electronics,2,75000
 bob,Mouse,Electronics,3,1200
